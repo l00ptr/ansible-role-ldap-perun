@@ -2,3 +2,43 @@
 slapd_domain: 'perun.cesnet.cz'
 slapd_basedn: '{{ "dc=" + slapd_domain.split(".") | join(",dc=") }}'
 slapd_basedn_admin: '{{ "cn=admin," + slapd_basedn }}'
+
+ldapc_utils: "{{ perun_folder }}/perun-utils/ldapc-scripts"
+
+script_files:
+  initialize:
+    source: "{{ ldapc_utils }}/initialize-ldap.sh"
+    destination: "{{ perun_ldapc_folder }}/initialize-ldap.sh"
+    mode: "0744"
+  ldifDiff:
+    source: "{{ ldapc_utils }}/ldifdiff.pl"
+    destination: "{{ perun_ldapc_folder }}/ldifdiff.pl"
+    mode: "0744"
+  ldifDiffSort:
+    source: "{{ ldapc_utils }}/ldifdiff-sort.pl"
+    destination: "{{ perun_ldapc_folder }}/ldifdiff-sort.pl"
+    mode: "0744"
+  ldifSort:
+    source: "{{ ldapc_utils }}/ldifsort.pl"
+    destination: "{{ perun_ldapc_folder }}/ldifsort.pl"
+    mode: "0744"
+  ldapcJar:
+    source: "{{ perun_folder }}/perun-ldapc/target/perun-ldapc.jar"
+    destination: "{{ perun_ldapc_folder }}/perun-ldapc.jar"
+    mode: "0644"
+  ldapcInitializerJar:
+    source: "{{ perun_folder }}/perun-ldapc-initializer/target/perun-ldapc-initializer.jar"
+    destination: "{{ perun_ldapc_folder }}/perun-ldapc-initializer.jar"
+    mode: "0644"
+
+# Template file and destination in remote system for perun-ldapc.properties
+perun_ldapc_properties_template: perun_ldapc_properties.j2
+perun_ldapc_properties_file: "{{ perun_config_dir }}/perun-ldapc.properties"
+
+# Template file and destination in remote system for logback-ldapc.xml
+logback_ldapc_xml_template: logback_ldapc_xml.j2
+logback_ldapc_xml_file: "{{ perun_config_dir }}/logback-ldapc.xml"
+
+# Template file and destination in remote system for perun-rpc-lib.properties
+perun_rpc_lib_properties_template: perun_rpc_lib_properties.j2
+perun_rpc_lib_properties_file: "{{ perun_config_dir }}/perun-rpc-lib.properties"
