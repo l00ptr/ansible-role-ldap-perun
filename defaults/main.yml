@@ -1,0 +1,4 @@
+---
+slapd_domain: 'perun.cesnet.cz'
+slapd_basedn: '{{ "dc=" + slapd_domain.split(".") | join(",dc=") }}'
+slapd_basedn_admin: '{{ "cn=admin," + slapd_basedn }}'

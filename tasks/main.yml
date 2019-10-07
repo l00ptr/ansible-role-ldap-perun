@@ -1,0 +1,4 @@
+---
+- import_tasks: install_ldap.yml
+  tags:
+    - install_ldap

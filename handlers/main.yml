@@ -1,0 +1,8 @@
+---
+# handlers file for install-ldap.yml
+- name: restart LDAP
+  service:
+    state: restarted
+    enabled: yes
+    name: slapd
+  listen: "restart LDAP"
