@@ -2,7 +2,30 @@
 slapd_domain: 'perun.cesnet.cz'
 slapd_basedn: '{{ "dc=" + slapd_domain.split(".") | join(",dc=") }}'
 slapd_basedn_admin: '{{ "cn=admin," + slapd_basedn }}'
+organization: 'perun'
+perun_folder: '/home/perun/'
+ldap_data_tree_password: 'test'
+config_admin_password: 'test'
 
+# LDAP CERTIFICATE
+# Path to LDAP certificate file (olcTLSCertificateFile) - Apache certificate file (SSLCertificateFile)
+ldap_certificate_file: '/etc/ssl/certs/ssl-cert-snakeoil.pem'
+
+# Path to key for LDAP certificate file (olcTLSCertificateKeyFile) - key for Apache certificate file
+ldap_certificate_key_file: '/etc/ssl/private/ssl-cert-snakeoil.key'
+
+# Path to CA LDAP certificate file (olcTLSCACertificateFile) - chain of CA  certificates. (SSLCertificateChainFile)
+ldap_ca_certificate_file: '/etc/ssl/certs/ssl-cert-snakeoil.pem'
+
+
+
+perun_login: debian
+perun_group: debian
+config_files_owner: debian
+perun_ldapc_folder:  "/home/{{ perun_login }}/perun-ldapc"
+slapd_password_sasl_login_namespace: 'EXAMPLE'
+password_perun_admin: "EXAMPLE"
+perun_log_dir: "/var/log/perun"
 ldapc_utils: "{{ perun_folder }}/perun-utils/ldapc-scripts"
 
 script_files:
@@ -30,6 +53,8 @@ script_files:
     source: "{{ perun_folder }}/perun-ldapc-initializer/target/perun-ldapc-initializer.jar"
     destination: "{{ perun_ldapc_folder }}/perun-ldapc-initializer.jar"
     mode: "0644"
+
+perun_config_dir: "/etc/perun"
 
 # Template file and destination in remote system for perun-ldapc.properties
 perun_ldapc_properties_template: perun_ldapc_properties.j2

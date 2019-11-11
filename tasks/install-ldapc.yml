@@ -5,7 +5,7 @@
     that:
       - perun_login is defined
       - perun_group is defined
-      - config_file_owner is defined
+      - config_files_owner is defined
       - perun_ldapc_folder is defined
       - perun_folder is defined
       - ldapc_utils is defined
