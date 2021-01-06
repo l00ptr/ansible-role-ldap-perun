@@ -3,6 +3,13 @@
     name: openldap
     groups: ssl-cert
     append: yes
+  register: configure_openldap_sslgroup
+
+- name: Restart slapd when openldap user is added to ssl-cert group
+  service:
+    name: slapd
+    state: restarted
+  when: configure_openldap_sslgroup.changed
 
 - name: Create file for modifying LDAP TLS settings
   copy:
@@ -10,15 +17,15 @@
     content: |
       dn: cn=config
       changetype: modify
-      replace: olcTLSCertificateFile
-      olcTLSCertificateFile: {{ ldap_certificate_file }}
+      replace: olcTLSCACertificateFile
+      olcTLSCACertificateFile: {{ ldap_ca_certificate_file }}
       -
       replace: olcTLSCertificateKeyFile
       olcTLSCertificateKeyFile: {{ ldap_certificate_key_file }}
       -
-      replace: olcTLSCACertificateFile
-      olcTLSCACertificateFile: {{ ldap_ca_certificate_file }}
-      -
+      replace: olcTLSCertificateFile
+      olcTLSCertificateFile: {{ ldap_certificate_file }}
+     
 
 - name: Change TLS settings
   command: /usr/bin/ldapmodify -Q -H ldapi:/// -Y EXTERNAL -f /etc/ldap/ssl.ldif

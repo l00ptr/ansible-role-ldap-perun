@@ -33,6 +33,7 @@
 - name: install LDAP
   package:
     name:
+      - ssl-cert
       - slapd
       - ldap-utils
       - python-ldap
