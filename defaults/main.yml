@@ -4,7 +4,7 @@ slapd_basedn: '{{ "dc=" + slapd_domain.split(".") | join(",dc=") }}'
 slapd_basedn_admin: '{{ "cn=admin," + slapd_basedn }}'
 organization: 'example'
 ldap_data_tree_password: 'test'
-config_admin_password: 'test'
+config_admin_password: '{{ ldap_data_tree_password }}'
 
 # LDAP CERTIFICATE
 # Path to LDAP certificate file (olcTLSCertificateFile) - Apache certificate file (SSLCertificateFile)
