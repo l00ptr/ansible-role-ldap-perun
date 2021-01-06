@@ -11,4 +11,3 @@
       - ldap_certificate_file is defined
       - ldap_certificate_key_file is defined
       - ldap_ca_certificate_file is defined
-      - perun_folder is defined
