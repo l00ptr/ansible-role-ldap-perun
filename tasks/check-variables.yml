@@ -1,0 +1,13 @@
+---
+- name: check that variables are defined
+  assert:
+    that:
+      - organization is defined
+      - slapd_domain is defined
+      - slapd_basedn is defined
+      - slapd_basedn_admin is defined
+      - ldap_data_tree_password is defined
+      - config_admin_password is defined
+      - ldap_certificate_file is defined
+      - ldap_certificate_key_file is defined
+      - ldap_ca_certificate_file is defined

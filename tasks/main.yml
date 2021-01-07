@@ -1,8 +1,16 @@
 ---
-#- import_tasks: install-ldap.yml
-#  tags:
-#    - install-ldap
-
-- import_tasks: install-ldapc.yml
+- import_tasks: check-variables.yml
   tags:
-    -install-ldapc
+    - install-ldap
+- import_tasks: install-ldap.yml
+  tags:
+    - install-ldap
+- import_tasks: configure-ldap.yml
+  tags:
+    - install-ldap
+- import_tasks: configure-ldap-access.yml
+  tags:
+    - install-ldap
+- import_tasks: configure-ldap-tls.yml
+  tags:
+    - install-ldap

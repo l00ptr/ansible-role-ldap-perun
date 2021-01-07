@@ -1,11 +1,10 @@
 ---
-slapd_domain: 'perun.cesnet.cz'
+slapd_domain: 'example.net'
 slapd_basedn: '{{ "dc=" + slapd_domain.split(".") | join(",dc=") }}'
 slapd_basedn_admin: '{{ "cn=admin," + slapd_basedn }}'
-organization: 'perun'
-perun_folder: '/home/perun/'
+organization: 'example'
 ldap_data_tree_password: 'test'
-config_admin_password: 'test'
+config_admin_password: '{{ ldap_data_tree_password }}'
 
 # LDAP CERTIFICATE
 # Path to LDAP certificate file (olcTLSCertificateFile) - Apache certificate file (SSLCertificateFile)
@@ -16,54 +15,3 @@ ldap_certificate_key_file: '/etc/ssl/private/ssl-cert-snakeoil.key'
 
 # Path to CA LDAP certificate file (olcTLSCACertificateFile) - chain of CA  certificates. (SSLCertificateChainFile)
 ldap_ca_certificate_file: '/etc/ssl/certs/ssl-cert-snakeoil.pem'
-
-
-
-perun_login: debian
-perun_group: debian
-config_files_owner: debian
-perun_ldapc_folder:  "/home/{{ perun_login }}/perun-ldapc"
-slapd_password_sasl_login_namespace: 'EXAMPLE'
-password_perun_admin: "EXAMPLE"
-perun_log_dir: "/var/log/perun"
-ldapc_utils: "{{ perun_folder }}/perun-utils/ldapc-scripts"
-
-script_files:
-  initialize:
-    source: "{{ ldapc_utils }}/initialize-ldap.sh"
-    destination: "{{ perun_ldapc_folder }}/initialize-ldap.sh"
-    mode: "0744"
-  ldifDiff:
-    source: "{{ ldapc_utils }}/ldifdiff.pl"
-    destination: "{{ perun_ldapc_folder }}/ldifdiff.pl"
-    mode: "0744"
-  ldifDiffSort:
-    source: "{{ ldapc_utils }}/ldifdiff-sort.pl"
-    destination: "{{ perun_ldapc_folder }}/ldifdiff-sort.pl"
-    mode: "0744"
-  ldifSort:
-    source: "{{ ldapc_utils }}/ldifsort.pl"
-    destination: "{{ perun_ldapc_folder }}/ldifsort.pl"
-    mode: "0744"
-  ldapcJar:
-    source: "{{ perun_folder }}/perun-ldapc/target/perun-ldapc.jar"
-    destination: "{{ perun_ldapc_folder }}/perun-ldapc.jar"
-    mode: "0644"
-  ldapcInitializerJar:
-    source: "{{ perun_folder }}/perun-ldapc-initializer/target/perun-ldapc-initializer.jar"
-    destination: "{{ perun_ldapc_folder }}/perun-ldapc-initializer.jar"
-    mode: "0644"
-
-perun_config_dir: "/etc/perun"
-
-# Template file and destination in remote system for perun-ldapc.properties
-perun_ldapc_properties_template: perun_ldapc_properties.j2
-perun_ldapc_properties_file: "{{ perun_config_dir }}/perun-ldapc.properties"
-
-# Template file and destination in remote system for logback-ldapc.xml
-logback_ldapc_xml_template: logback_ldapc_xml.j2
-logback_ldapc_xml_file: "{{ perun_config_dir }}/logback-ldapc.xml"
-
-# Template file and destination in remote system for perun-rpc-lib.properties
-perun_rpc_lib_properties_template: perun_rpc_lib_properties.j2
-perun_rpc_lib_properties_file: "{{ perun_config_dir }}/perun-rpc-lib.properties"
