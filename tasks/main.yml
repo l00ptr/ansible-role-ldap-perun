@@ -5,12 +5,16 @@
 - import_tasks: install-ldap.yml
   tags:
     - install-ldap
-- import_tasks: configure-ldap.yml
+    - install-ldap-packages
+- import_tasks: configure-ldap-admin.yml
   tags:
     - install-ldap
+    - configure-admin
 - import_tasks: configure-ldap-access.yml
   tags:
     - install-ldap
+    - configure-access
 - import_tasks: configure-ldap-tls.yml
   tags:
     - install-ldap
+    - configure-tls
